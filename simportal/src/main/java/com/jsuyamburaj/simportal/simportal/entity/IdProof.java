@@ -1,6 +1,6 @@
 package com.jsuyamburaj.simportal.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity

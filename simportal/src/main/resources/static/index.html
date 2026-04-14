@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM Activation Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SIM Activation Portal</h1>
+        
+        <div class="card">
+            <h2>Activate SIM</h2>
+            <form id="activationForm">
+                <input type="text" id="simNumber" placeholder="SIM Number" required>
+                <input type="text" id="mobileNumber" placeholder="Mobile Number" required>
+                <input type="text" id="customerName" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <button type="submit">Activate SIM</button>
+            </form>
+            <div id="message"></div>
+        </div>
+
+        <div class="card">
+            <h2>Available Offers</h2>
+            <ul id="offersList"></ul>
+        </div>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>

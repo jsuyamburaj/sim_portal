@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Proof Upload - SIM Activation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Telecom SIM Activation</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/user/status.html">Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="progressContainer"></div>
+
+    <div class="form-container">
+        <h2>Step 4: ID Proof Details</h2>
+        <form id="idProofForm">
+            <div class="form-group">
+                <label>ID Type</label>
+                <select id="idType" required>
+                    <option value="AADHAR">Aadhar Card</option>
+                    <option value="PAN">PAN Card</option>
+                    <option value="PASSPORT">Passport</option>
+                    <option value="VOTER_ID">Voter ID</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ID Number</label>
+                <input type="text" id="idNumber" required>
+            </div>
+            <button type="submit" class="btn-next">Continue →</button>
+        </form>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/user/progress.js"></script>
+    <script src="/js/user/idproof.js"></script>
+</body>
+</html>

@@ -3,30 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIM Activation Portal</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Telecom SIM Activation Portal</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>SIM Activation Portal</h1>
-        
-        <div class="card">
-            <h2>Activate SIM</h2>
-            <form id="activationForm">
-                <input type="text" id="simNumber" placeholder="SIM Number" required>
-                <input type="text" id="mobileNumber" placeholder="Mobile Number" required>
-                <input type="text" id="customerName" placeholder="Full Name" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <button type="submit">Activate SIM</button>
-            </form>
-            <div id="message"></div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📱</span>
+                <span class="logo-text">Telecom SIM Activation</span>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="/user/status.html">Check Status</a>
+                <button class="admin-login-btn" id="adminLoginBtn">Admin Login</button>
+            </div>
         </div>
+    </nav>
 
-        <div class="card">
-            <h2>Available Offers</h2>
-            <ul id="offersList"></ul>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to SIM Activation Portal</h1>
+            <p>Activate your new SIM in minutes with our simple step-by-step process</p>
+            <a href="/user/sim-validation.html" class="btn-start">Start Activation →</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Our Services</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>SIM Validation</h3>
+                <p>Verify your SIM number and ICCID instantly</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Customer Validation</h3>
+                <p>Submit your personal details securely</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Address Update</h3>
+                <p>Update your communication address</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🪪</div>
+                <h3>ID Proof Upload</h3>
+                <p>Upload Aadhar, PAN, or Passport</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Exclusive Offers</h3>
+                <p>Choose from best prepaid/postpaid plans</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Status Check</h3>
+                <p>Track your activation status</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Login Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Login</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUsername" required placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn-login">Login</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
         </div>
     </div>
-    <script src="/js/script.js"></script>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

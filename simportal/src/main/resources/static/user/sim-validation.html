@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM Validation - SIM Activation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Telecom SIM Activation</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/user/status.html">Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="progressContainer"></div>
+
+    <div class="form-container">
+        <h2>Step 1: SIM Validation</h2>
+        <form id="simForm">
+            <div class="form-group">
+                <label>SIM Number (20 digits)</label>
+                <input type="text" id="simNumber" required maxlength="20" placeholder="Enter your SIM number">
+            </div>
+            <button type="submit" class="btn-next">Validate & Continue →</button>
+        </form>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/user/progress.js"></script>
+    <script src="/js/user/sim.js"></script>
+</body>
+</html>

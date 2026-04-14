@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation Success - SIM Activation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Telecom SIM Activation</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/user/status.html">Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="progressContainer"></div>
+
+    <div class="form-container">
+        <div class="status-card">
+            <div class="status-icon">🎉</div>
+            <h2>Congratulations!</h2>
+            <p class="status-message">Your SIM has been successfully activated!</p>
+            <div class="status-details">
+                <p><strong>SIM Number:</strong> <span id="simNumber"></span></p>
+                <p><strong>Mobile Number:</strong> <span id="mobileNumber"></span></p>
+                <p><strong>Activation Date:</strong> <span id="activationDate"></span></p>
+            </div>
+            <a href="/" class="btn-start" style="margin-top: 1rem;">Go to Home</a>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/user/progress.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const simData = getFromSession('step_0');
+            if (simData) {
+                document.getElementById('simNumber').textContent = simData.simNumber;
+                document.getElementById('mobileNumber').textContent = 'Activated';
+                document.getElementById('activationDate').textContent = new Date().toLocaleDateString();
+            }
+        });
+    </script>
+</body>
+</html>

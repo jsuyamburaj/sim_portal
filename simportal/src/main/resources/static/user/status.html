@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Status - SIM Activation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Telecom SIM Activation</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/user/status.html" class="active">Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <h2>Check Activation Status</h2>
+        <div class="form-group">
+            <label>SIM Number</label>
+            <input type="text" id="simNumber" placeholder="Enter your SIM number">
+        </div>
+        <button id="checkStatusBtn" class="btn-submit">Check Status</button>
+        <div id="statusResult" style="margin-top: 2rem;"></div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        document.getElementById('checkStatusBtn').addEventListener('click', async () => {
+            const simNumber = document.getElementById('simNumber').value;
+            if (!simNumber) {
+                alert('Please enter SIM number');
+                return;
+            }
+            
+            const result = await callAPI(API.STATUS(simNumber), 'GET');
+            
+            const resultDiv = document.getElementById('statusResult');
+            if (result.success && result.data) {
+                const status = result.data.status;
+                let statusHtml = '';
+                
+                if (status === 'VERIFIED' || status === 'ACTIVATED') {
+                    statusHtml = `
+                        <div class="status-card">
+                            <div class="status-icon">✅</div>
+                            <h3>Your SIM is ACTIVATED!</h3>
+                            <p>Mobile Number: ${result.data.mobileNumber || 'Not assigned'}</p>
+                        </div>
+                    `;
+                } else if (status === 'PENDING') {
+                    statusHtml = `
+                        <div class="status-card">
+                            <div class="status-icon">⏳</div>
+                            <h3>Activation in Progress</h3>
+                            <p>Your request is being processed.</p>
+                        </div>
+                    `;
+                } else {
+                    statusHtml = `
+                        <div class="status-card">
+                            <div class="status-icon">❌</div>
+                            <h3>Not Found</h3>
+                            <p>No activation found for this SIM.</p>
+                            <a href="/user/sim-validation.html" class="btn-start">Start Activation</a>
+                        </div>
+                    `;
+                }
+                
+                resultDiv.innerHTML = statusHtml;
+            } else {
+                resultDiv.innerHTML = '<div class="status-card"><p>Error checking status. Please try again.</p></div>';
+            }
+        });
+    </script>
+</body>
+</html>

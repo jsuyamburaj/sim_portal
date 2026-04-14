@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Update - SIM Activation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Telecom SIM Activation</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/user/status.html">Status</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="progressContainer"></div>
+
+    <div class="form-container">
+        <h2>Step 3: Address Details</h2>
+        <form id="addressForm">
+            <div class="form-group">
+                <label>Street Address</label>
+                <input type="text" id="street" required>
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" id="city" required>
+            </div>
+            <div class="form-group">
+                <label>State</label>
+                <input type="text" id="state" required>
+            </div>
+            <div class="form-group">
+                <label>Pincode</label>
+                <input type="text" id="pincode" required pattern="[0-9]{6}">
+            </div>
+            <div class="form-group">
+                <label>Landmark (Optional)</label>
+                <input type="text" id="landmark">
+            </div>
+            <button type="submit" class="btn-next">Continue →</button>
+        </form>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/user/progress.js"></script>
+    <script src="/js/user/address.js"></script>
+</body>
+</html>

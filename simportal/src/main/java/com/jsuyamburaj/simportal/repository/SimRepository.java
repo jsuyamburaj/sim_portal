@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface SimRepository extends JpaRepository<Sim, Long> {
     Optional<Sim> findBySimNumber(String simNumber);
     Optional<Sim> findByMobileNumber(String mobileNumber);
+    boolean existsBySimNumber(String simNumber);
 }

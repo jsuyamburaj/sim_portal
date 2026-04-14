@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Offer - Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Admin Portal</div>
+            <div class="nav-links">
+                <span>Welcome, Admin</span>
+                <button id="logoutBtn" class="admin-login-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <a href="/admin/admin-dashboard.html">📊 Dashboard</a>
+            <a href="/admin/manage-users.html">👥 Manage Users</a>
+            <a href="/admin/manage-offers.html">🎁 Manage Offers</a>
+        </div>
+        <div class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h1>Edit Offer</h1>
+                <a href="/admin/manage-offers.html" class="btn-add" style="text-decoration: none;">← Back to Offers</a>
+            </div>
+
+            <div class="form-container" style="max-width: 600px; margin: 0;">
+                <form id="editOfferForm">
+                    <input type="hidden" id="offerId">
+                    
+                    <div class="form-group">
+                        <label>Offer Name *</label>
+                        <input type="text" id="offerName" required placeholder="e.g., Summer Special Plan">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="offerDesc" rows="3" placeholder="Brief description of the offer" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price (₹) *</label>
+                        <input type="number" id="offerPrice" required placeholder="199" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Data Allowance</label>
+                        <input type="text" id="offerData" placeholder="e.g., 2GB/day, Unlimited, 100GB total">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Validity (Days) *</label>
+                        <input type="number" id="offerValidity" required placeholder="28">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="offerStatus">
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Update Offer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin/logout.js"></script>
+    <script>
+        // Get offer ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const offerId = urlParams.get('id');
+        
+        if (!offerId) {
+            alert('No offer ID specified');
+            window.location.href = '/admin/manage-offers.html';
+        }
+        
+        // Load offer details
+        async function loadOfferDetails() {
+            const result = await callAPI(`${API.ADMIN_OFFERS}/${offerId}`, 'GET');
+            
+            if (result.success && result.data) {
+                const offer = result.data;
+                document.getElementById('offerId').value = offer.id;
+                document.getElementById('offerName').value = offer.name || '';
+                document.getElementById('offerDesc').value = offer.description || '';
+                document.getElementById('offerPrice').value = offer.price || '';
+                document.getElementById('offerData').value = offer.dataAmount || '';
+                document.getElementById('offerValidity').value = offer.validityDays || '';
+                document.getElementById('offerStatus').value = offer.active ? 'true' : 'false';
+            } else {
+                alert('Error loading offer details');
+                window.location.href = '/admin/manage-offers.html';
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('editOfferForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const offerData = {
+                name: document.getElementById('offerName').value,
+                description: document.getElementById('offerDesc').value,
+                price: parseFloat(document.getElementById('offerPrice').value),
+                dataAmount: document.getElementById('offerData').value,
+                validityDays: parseInt(document.getElementById('offerValidity').value),
+                active: document.getElementById('offerStatus').value === 'true'
+            };
+            
+            const result = await callAPI(`${API.ADMIN_OFFERS}/${offerId}`, 'PUT', offerData);
+            
+            if (result.success) {
+                alert('Offer updated successfully!');
+                window.location.href = '/admin/manage-offers.html';
+            } else {
+                alert('Error updating offer: ' + (result.data?.message || 'Please try again'));
+            }
+        });
+        
+        // Load offer details on page load
+        loadOfferDetails();
+    </script>
+</body>
+</html>

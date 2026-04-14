@@ -11,5 +11,5 @@ public class IdProof {
     private Long id;
     private String type; // AADHAR, PAN, PASSPORT, VOTER_ID
     private String number;
-    private String imagePath; // path to uploaded file
+    private String imagePath;
 }

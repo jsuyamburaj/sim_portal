@@ -557,4 +557,34 @@ body {
     .progress-steps {
         overflow-x: auto;
     }
+
+    /* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.pending {
+    background: #ff9800;
+    color: white;
+}
+
+.status-badge.verified {
+    background: #2196f3;
+    color: white;
+}
+
+.status-badge.activated {
+    background: #4caf50;
+    color: white;
+}
+
+/* Active nav link in admin sidebar */
+.admin-sidebar a.active {
+    background: var(--primary-red);
+    border-left: 4px solid white;
+}
 }

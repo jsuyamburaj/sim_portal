@@ -12,5 +12,7 @@ public class Offer {
     private String name;
     private String description;
     private Double price;
+    private String dataAmount; // e.g., "1.5GB/day"
     private Integer validityDays;
+    private Boolean active = true;
 }

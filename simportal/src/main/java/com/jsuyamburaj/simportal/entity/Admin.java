@@ -5,13 +5,11 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Address {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String street;
-    private String city;
-    private String state;
-    private String pincode;
-    private String landmark;
+    private String username;
+    private String password;
+    private String email;
 }

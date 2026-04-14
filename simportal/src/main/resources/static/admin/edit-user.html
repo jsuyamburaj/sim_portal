@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User - Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📱 Admin Portal</div>
+            <div class="nav-links">
+                <span>Welcome, Admin</span>
+                <button id="logoutBtn" class="admin-login-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="admin-sidebar">
+            <a href="/admin/admin-dashboard.html">📊 Dashboard</a>
+            <a href="/admin/manage-users.html">👥 Manage Users</a>
+            <a href="/admin/manage-offers.html">🎁 Manage Offers</a>
+        </div>
+        <div class="admin-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h1>Edit User</h1>
+                <a href="/admin/manage-users.html" class="btn-add" style="text-decoration: none;">← Back to Users</a>
+            </div>
+
+            <div class="form-container" style="max-width: 700px; margin: 0;">
+                <form id="editUserForm">
+                    <input type="hidden" id="userId">
+                    
+                    <h3 style="color: var(--primary-red); margin-top: 0;">Personal Information</h3>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" id="phone" required pattern="[0-9]{10}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="dob">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Activation Status</label>
+                        <select id="activationStatus">
+                            <option value="PENDING">Pending</option>
+                            <option value="VERIFIED">Verified</option>
+                            <option value="ACTIVATED">Activated</option>
+                        </select>
+                    </div>
+
+                    <h3 style="color: var(--primary-red);">SIM & Offer Details</h3>
+                    
+                    <div class="form-group">
+                        <label>SIM Number</label>
+                        <input type="text" id="simNumber" placeholder="Enter SIM number">
+                        <small style="color: #666;">Current SIM: <span id="currentSim"></span></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select Offer</label>
+                        <select id="offerId">
+                            <option value="">No offer</option>
+                        </select>
+                    </div>
+
+                    <h3 style="color: var(--primary-red);">Address Details</h3>
+                    
+                    <div class="form-group">
+                        <label>Street Address</label>
+                        <input type="text" id="street">
+                    </div>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" id="state">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" id="pincode" pattern="[0-9]{6}">
+                        </div>
+                        <div class="form-group">
+                            <label>Landmark</label>
+                            <input type="text" id="landmark">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary-red);">ID Proof Details</h3>
+                    
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>ID Type</label>
+                            <select id="idType">
+                                <option value="AADHAR">Aadhar Card</option>
+                                <option value="PAN">PAN Card</option>
+                                <option value="PASSPORT">Passport</option>
+                                <option value="VOTER_ID">Voter ID</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ID Number</label>
+                            <input type="text" id="idNumber">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Update User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin/logout.js"></script>
+    <script>
+        // Get user ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+        
+        if (!userId) {
+            alert('No user ID specified');
+            window.location.href = '/admin/manage-users.html';
+        }
+        
+        // Load offers for dropdown
+        async function loadOffers() {
+            const result = await callAPI(API.OFFERS, 'GET');
+            
+            if (result.success && result.data) {
+                const select = document.getElementById('offerId');
+                select.innerHTML = '<option value="">No offer</option>' + 
+                    result.data.map(offer => `<option value="${offer.id}">${offer.name} - ₹${offer.price} (${offer.validityDays} days)</option>`).join('');
+            }
+        }
+        
+        // Load user details
+        async function loadUserDetails() {
+            const result = await callAPI(`${API.ADMIN_USERS}/${userId}`, 'GET');
+            
+            if (result.success && result.data) {
+                const user = result.data;
+                document.getElementById('userId').value = user.id;
+                document.getElementById('firstName').value = user.firstName || '';
+                document.getElementById('lastName').value = user.lastName || '';
+                document.getElementById('email').value = user.email || '';
+                document.getElementById('phone').value = user.phone || '';
+                document.getElementById('dob').value = user.dob || '';
+                document.getElementById('activationStatus').value = user.activationStatus || 'PENDING';
+                document.getElementById('simNumber').value = user.sim?.simNumber || '';
+                document.getElementById('currentSim').textContent = user.sim?.simNumber || 'No SIM assigned';
+                
+                if (user.selectedOffer) {
+                    document.getElementById('offerId').value = user.selectedOffer.id;
+                }
+                
+                if (user.address) {
+                    document.getElementById('street').value = user.address.street || '';
+                    document.getElementById('city').value = user.address.city || '';
+                    document.getElementById('state').value = user.address.state || '';
+                    document.getElementById('pincode').value = user.address.pincode || '';
+                    document.getElementById('landmark').value = user.address.landmark || '';
+                }
+                
+                if (user.idProof) {
+                    document.getElementById('idType').value = user.idProof.type || 'AADHAR';
+                    document.getElementById('idNumber').value = user.idProof.number || '';
+                }
+            } else {
+                alert('Error loading user details');
+                window.location.href = '/admin/manage-users.html';
+            }
+        }
+        
+        // Handle form submission
+        document.getElementById('editUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const userData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dob: document.getElementById('dob').value || null,
+                simNumber: document.getElementById('simNumber').value || null,
+                offerId: document.getElementById('offerId').value ? parseInt(document.getElementById('offerId').value) : null,
+                street: document.getElementById('street').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                pincode: document.getElementById('pincode').value,
+                landmark: document.getElementById('landmark').value,
+                idType: document.getElementById('idType').value,
+                idNumber: document.getElementById('idNumber').value
+            };
+            
+            const result = await callAPI(`${API.ADMIN_USERS}/${userId}`, 'PUT', userData);
+            
+            if (result.success) {
+                alert('User updated successfully!');
+                window.location.href = '/admin/manage-users.html';
+            } else {
+                alert('Error updating user: ' + (result.data?.message || 'Please try again'));
+            }
+        });
+        
+        // Load data on page load
+        loadOffers();
+        loadUserDetails();
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import com.jsuyamburaj.simportal.repository.CustomerRepository;
 import com.jsuyamburaj.simportal.repository.SimRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class CustomerService {

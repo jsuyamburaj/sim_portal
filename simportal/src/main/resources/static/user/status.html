@@ -4,7 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Status - SIM Activation</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #c62828;
+            --dark-red: #8B0000;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .form-container h2 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .btn-check {
+            background: var(--primary-red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .status-result {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status-result h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .status-info {
+            color: var(--white);
+            margin: 0.5rem 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.pending { background: #ff9800; color: white; }
+        .status-badge.verified { background: #2196f3; color: white; }
+        .status-badge.activated { background: #4caf50; color: white; }
+        .status-badge.not_found { background: #f44336; color: white; }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .form-container { margin: 1rem; padding: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -12,67 +153,95 @@
             <div class="logo">📱 Telecom SIM Activation</div>
             <div class="nav-links">
                 <a href="/">Home</a>
-                <a href="/user/status.html" class="active">Status</a>
+                <a href="/user/status.html" class="active">Check Status</a>
             </div>
         </div>
     </nav>
 
     <div class="form-container">
         <h2>Check Activation Status</h2>
-        <div class="form-group">
-            <label>SIM Number</label>
-            <input type="text" id="simNumber" placeholder="Enter your SIM number">
-        </div>
-        <button id="checkStatusBtn" class="btn-submit">Check Status</button>
-        <div id="statusResult" style="margin-top: 2rem;"></div>
+        <form id="statusForm">
+            <div class="form-group">
+                <label>Enter SIM Number</label>
+                <input type="text" id="simNumber" required placeholder="Enter your 20-digit SIM number">
+            </div>
+            <button type="submit" class="btn-check">Check Status</button>
+        </form>
+        <div id="statusResult" class="status-result"></div>
     </div>
 
-    <script src="/js/api.js"></script>
     <script>
-        document.getElementById('checkStatusBtn').addEventListener('click', async () => {
+        const API_BASE_URL = 'http://localhost:8080/api';
+        
+        document.getElementById('statusForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
             const simNumber = document.getElementById('simNumber').value;
-            if (!simNumber) {
-                alert('Please enter SIM number');
-                return;
-            }
-            
-            const result = await callAPI(API.STATUS(simNumber), 'GET');
-            
             const resultDiv = document.getElementById('statusResult');
-            if (result.success && result.data) {
-                const status = result.data.status;
-                let statusHtml = '';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/customer/status/${simNumber}`);
+                const data = await response.json();
                 
-                if (status === 'VERIFIED' || status === 'ACTIVATED') {
-                    statusHtml = `
-                        <div class="status-card">
-                            <div class="status-icon">✅</div>
-                            <h3>Your SIM is ACTIVATED!</h3>
-                            <p>Mobile Number: ${result.data.mobileNumber || 'Not assigned'}</p>
-                        </div>
-                    `;
-                } else if (status === 'PENDING') {
-                    statusHtml = `
-                        <div class="status-card">
-                            <div class="status-icon">⏳</div>
-                            <h3>Activation in Progress</h3>
-                            <p>Your request is being processed.</p>
-                        </div>
-                    `;
-                } else {
-                    statusHtml = `
-                        <div class="status-card">
-                            <div class="status-icon">❌</div>
-                            <h3>Not Found</h3>
-                            <p>No activation found for this SIM.</p>
-                            <a href="/user/sim-validation.html" class="btn-start">Start Activation</a>
-                        </div>
-                    `;
+                resultDiv.style.display = 'block';
+                
+                let statusHtml = '';
+                let statusClass = '';
+                
+                switch(data.status) {
+                    case 'ACTIVATED':
+                        statusClass = 'activated';
+                        statusHtml = `
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem;">✅</div>
+                                <h3 style="color: #4caf50;">SIM ACTIVATED!</h3>
+                                <p class="status-info">Your SIM is active and ready to use.</p>
+                                <p class="status-info"><strong>Mobile Number:</strong> ${data.mobileNumber || 'Assigned'}</p>
+                            </div>
+                        `;
+                        break;
+                    case 'VERIFIED':
+                        statusClass = 'verified';
+                        statusHtml = `
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem;">⏳</div>
+                                <h3 style="color: #2196f3;">Verification Complete</h3>
+                                <p class="status-info">Your details have been verified. Activation in progress.</p>
+                            </div>
+                        `;
+                        break;
+                    case 'PENDING':
+                        statusClass = 'pending';
+                        statusHtml = `
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem;">📝</div>
+                                <h3 style="color: #ff9800;">Application Pending</h3>
+                                <p class="status-info">Your application is being processed.</p>
+                            </div>
+                        `;
+                        break;
+                    default:
+                        statusClass = 'not_found';
+                        statusHtml = `
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem;">❌</div>
+                                <h3 style="color: #f44336;">Not Found</h3>
+                                <p class="status-info">No activation found for this SIM number.</p>
+                                <a href="/user/sim-validation.html" style="color: var(--white); display: inline-block; margin-top: 1rem;">Start Activation →</a>
+                            </div>
+                        `;
                 }
                 
                 resultDiv.innerHTML = statusHtml;
-            } else {
-                resultDiv.innerHTML = '<div class="status-card"><p>Error checking status. Please try again.</p></div>';
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem;">⚠️</div>
+                        <h3 style="color: #f44336;">Error</h3>
+                        <p class="status-info">Unable to check status. Please try again.</p>
+                    </div>
+                `;
             }
         });
     </script>

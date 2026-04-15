@@ -3,8 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Offer - SIM Activation</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Activation Success - SIM Activation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #c62828;
+            --dark-red: #8B0000;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .progress-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            background: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .step.completed {
+            border-color: #4caf50;
+            background: #4caf50;
+            color: var(--white);
+        }
+
+        .step-label {
+            position: absolute;
+            top: 45px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            color: var(--white);
+        }
+
+        .success-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-container h2 {
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .success-container p {
+            color: var(--white);
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .status-details {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .status-details p {
+            margin: 0.5rem 0;
+            color: var(--white);
+        }
+
+        .btn-home {
+            background: var(--primary-red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .step-label { display: none; }
+            .success-container { margin: 1rem; padding: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -12,21 +179,51 @@
             <div class="logo">📱 Telecom SIM Activation</div>
             <div class="nav-links">
                 <a href="/">Home</a>
-                <a href="/user/status.html">Status</a>
+                <a href="/user/status.html">Check Status</a>
             </div>
         </div>
     </nav>
 
-    <div id="progressContainer"></div>
-
-    <div class="form-container">
-        <h2>Step 5: Select Your Offer</h2>
-        <div id="offersContainer" class="offers-grid"></div>
-        <button id="confirmBtn" class="btn-submit">Confirm & Activate →</button>
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="step completed">1<span class="step-label">SIM Validation</span></div>
+            <div class="step completed">2<span class="step-label">Customer Details</span></div>
+            <div class="step completed">3<span class="step-label">Address</span></div>
+            <div class="step completed">4<span class="step-label">ID Proof</span></div>
+            <div class="step completed">5<span class="step-label">Offers</span></div>
+            <div class="step completed">6<span class="step-label">Activation</span></div>
+        </div>
     </div>
 
-    <script src="/js/api.js"></script>
-    <script src="/js/user/progress.js"></script>
-    <script src="/js/user/offers.js"></script>
+    <div class="success-container">
+        <div class="success-icon">🎉</div>
+        <h2>Congratulations!</h2>
+        <p>Your SIM has been successfully activated!</p>
+        <div class="status-details">
+            <p><strong>SIM Number:</strong> <span id="simNumber"></span></p>
+            <p><strong>Mobile Number:</strong> <span id="mobileNumber">Will be assigned within 24 hours</span></p>
+            <p><strong>Activation Date:</strong> <span id="activationDate"></span></p>
+            <p><strong>Status:</strong> <span style="color: #4caf50;">ACTIVATED</span></p>
+        </div>
+        <a href="/" class="btn-home">Go to Home</a>
+    </div>
+
+    <script>
+        function getFromSession(key) {
+            const value = sessionStorage.getItem(key);
+            return value ? JSON.parse(value) : null;
+        }
+        
+        const simData = getFromSession('simData');
+        if (simData) {
+            document.getElementById('simNumber').textContent = simData.simNumber;
+        }
+        document.getElementById('activationDate').textContent = new Date().toLocaleDateString();
+        
+        // Clear session after showing success (optional)
+        setTimeout(() => {
+            // sessionStorage.clear(); // Uncomment if you want to clear after success
+        }, 5000);
+    </script>
 </body>
 </html>

@@ -1,572 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Activation Success - SIM Activation Portal</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activation Success | Glass Theme</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #c62828;
-            --dark-red: #8B0000;
-            --light-red: #ffebee;
-            --white: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --success-green: #4caf50;
-            --success-dark: #388e3c;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
-            min-height: 100vh;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Glass Navigation */
-        .navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary: #1a237e;
+        --action: #ffb300;
+        --support: #0288d1;
+        --glass-card: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-blur: blur(12px);
+        --white: #fff;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+        min-height: 100vh;
+      }
+      .navbar {
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--white);
+        font-weight: 500;
+      }
+      .nav-links a:hover {
+        color: var(--action);
+      }
+      .progress-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      .progress-steps::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.3);
+        z-index: 1;
+      }
+      .step {
+        position: relative;
+        z-index: 2;
+        background: var(--glass-card);
+        backdrop-filter: blur(4px);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        border: 2px solid var(--glass-border);
+        color: var(--white);
+      }
+      .step.completed {
+        border-color: var(--action);
+        background: var(--action);
+        color: var(--primary);
+      }
+      .step-label {
+        position: absolute;
+        top: 45px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        color: var(--white);
+      }
+      .success-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: var(--glass-card);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+      }
+      .success-icon {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+      }
+      .success-container h2 {
+        color: #4caf50;
+        margin-bottom: 1rem;
+      }
+      .status-details {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1rem;
+        margin: 1.5rem 0;
+        text-align: left;
+      }
+      .status-details p {
+        margin: 0.5rem 0;
+        color: var(--white);
+      }
+      .btn-home {
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+      }
+      .btn-home:hover {
+        background: #ff8f00;
+        transform: translateY(-2px);
+      }
+      @media (max-width: 768px) {
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          flex-direction: column;
+          gap: 1rem;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-            animation: bounce 1s ease infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .progress-steps::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.3);
-            z-index: 1;
-        }
-
-        .step {
-            position: relative;
-            z-index: 2;
-            background: var(--white);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .step.completed {
-            border-color: var(--success-green);
-            background: var(--success-green);
-            color: var(--white);
-            animation: pulse 0.5s ease;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
         .step-label {
-            position: absolute;
-            top: 45px;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            color: var(--white);
-            font-weight: 500;
+          display: none;
         }
-
-        /* Success Container */
         .success-container {
-            max-width: 650px;
-            margin: 2rem auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            border: 1px solid var(--glass-border);
-            animation: slideUp 0.6s ease-out;
+          margin: 1rem;
+          padding: 1.5rem;
         }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .success-icon {
-            text-align: center;
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            animation: bounceIn 0.8s ease;
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .success-container h2 {
-            color: var(--success-green);
-            text-align: center;
-            margin-bottom: 0.5rem;
-            font-size: 2rem;
-        }
-
-        .success-message {
-            text-align: center;
-            color: var(--white);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Status Details Card */
-        .status-details {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(4px);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .detail-value {
-            color: var(--white);
-            font-weight: 500;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            background: var(--success-green);
-            color: white;
-            animation: glow 1.5s infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px var(--success-green); }
-            50% { box-shadow: 0 0 15px var(--success-green); }
-        }
-
-        /* Important Notes */
-        .important-notes {
-            background: rgba(255, 193, 7, 0.15);
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .important-notes p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-        }
-
-        .important-notes strong {
-            color: #ffc107;
-        }
-
-        /* Button Group */
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .btn-primary, .btn-secondary {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--primary-red);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--dark-red);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--white);
-            border: 1px solid var(--glass-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Confetti Canvas */
-        #confetti-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .step-label {
-                display: none;
-            }
-            
-            .success-container {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-            
-            .button-group {
-                flex-direction: column;
-            }
-            
-            .detail-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .success-container h2 {
-                font-size: 1.5rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <canvas id="confetti-canvas"></canvas>
-    
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-icon">📱</span>
-                <span class="logo-text">Telecom SIM Activation</span>
-            </div>
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/user/status.html">Check Status</a>
-            </div>
+      <div class="nav-container">
+        <div class="logo">📱 SIM Activation Portal</div>
+        <div class="nav-links">
+          <a href="/">Home</a><a href="/user/status.html">Check Status</a>
         </div>
+      </div>
     </nav>
-
     <div class="progress-container">
-        <div class="progress-steps">
-            <div class="step completed">1<span class="step-label">SIM Validation</span></div>
-            <div class="step completed">2<span class="step-label">Customer Details</span></div>
-            <div class="step completed">3<span class="step-label">Address</span></div>
-            <div class="step completed">4<span class="step-label">ID Proof</span></div>
-            <div class="step completed">5<span class="step-label">Offers</span></div>
-            <div class="step completed">6<span class="step-label">Activation</span></div>
+      <div class="progress-steps">
+        <div class="step completed">
+          1<span class="step-label">SIM Validation</span>
         </div>
+        <div class="step completed">
+          2<span class="step-label">Customer Details</span>
+        </div>
+        <div class="step completed">
+          3<span class="step-label">Address</span>
+        </div>
+        <div class="step completed">
+          4<span class="step-label">ID Proof</span>
+        </div>
+        <div class="step completed">
+          5<span class="step-label">Offers</span>
+        </div>
+        <div class="step completed">
+          6<span class="step-label">Activation</span>
+        </div>
+      </div>
     </div>
-
     <div class="success-container">
-        <div class="success-icon">
-            🎉
-        </div>
-        <h2>Congratulations!</h2>
-        <p class="success-message">Your SIM has been successfully activated!</p>
-        
-        <div class="status-details">
-            <div class="detail-row">
-                <span class="detail-label">📱 SIM Number:</span>
-                <span class="detail-value" id="simNumber">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">📞 Mobile Number:</span>
-                <span class="detail-value" id="mobileNumber">Will be assigned within 24 hours</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">📅 Activation Date:</span>
-                <span class="detail-value" id="activationDate">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">✅ Status:</span>
-                <span class="detail-value"><span class="status-badge">ACTIVATED</span></span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">📧 Confirmation Email:</span>
-                <span class="detail-value" id="customerEmail">-</span>
-            </div>
-        </div>
-
-        <div class="important-notes">
-            <p>📌 <strong>Important Information:</strong></p>
-            <p>• Your SIM will be active within 2-4 hours</p>
-            <p>• You will receive a confirmation SMS on your registered mobile number</p>
-            <p>• For any assistance, contact customer care at 1-800-123-4567</p>
-            <p>• Keep your SIM number handy for future reference</p>
-        </div>
-
-        <div class="button-group">
-            <a href="/" class="btn-primary">🏠 Go to Home</a>
-            <a href="/user/status.html" class="btn-secondary">📊 Check Status</a>
-            <button onclick="window.print()" class="btn-secondary">🖨️ Print Confirmation</button>
-        </div>
+      <div class="success-icon">🎉</div>
+      <h2>Congratulations!</h2>
+      <p>Your SIM has been successfully activated!</p>
+      <div class="status-details">
+        <p><strong>📱 SIM Number:</strong> <span id="simNumber"></span></p>
+        <p><strong>📞 Mobile Number:</strong> Will be assigned within 24h</p>
+        <p>
+          <strong>📅 Activation Date:</strong> <span id="activationDate"></span>
+        </p>
+        <p>
+          <strong>✅ Status:</strong>
+          <span style="color: #4caf50">ACTIVATED</span>
+        </p>
+      </div>
+      <a href="/" class="btn-home">Go to Home</a>
     </div>
-
-    <div class="footer">
-        <p>© 2025 Telecom SIM Activation Portal | Thank you for choosing us!</p>
-    </div>
-
     <script>
-        // Get data from session storage
-        function getFromSession(key) {
-            const value = sessionStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
-        }
-
-        // Display SIM number
-        const simData = getFromSession('simData');
-        if (simData && simData.simNumber) {
-            document.getElementById('simNumber').textContent = simData.simNumber;
-        } else {
-            document.getElementById('simNumber').textContent = 'SIM' + Math.random().toString(36).substring(2, 10).toUpperCase();
-        }
-
-        // Display customer email
-        const customerData = getFromSession('customerData');
-        if (customerData && customerData.email) {
-            document.getElementById('customerEmail').textContent = customerData.email;
-        } else {
-            document.getElementById('customerEmail').textContent = 'registered@email.com';
-        }
-
-        // Display activation date
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        document.getElementById('activationDate').textContent = formattedDate;
-
-        // Confetti Effect
-        (function() {
-            const canvas = document.getElementById('confetti-canvas');
-            const ctx = canvas.getContext('2d');
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-            let particles = [];
-            let animationId = null;
-
-            function resize() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
-            }
-
-            function random(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-
-            function createParticle() {
-                return {
-                    x: random(0, width),
-                    y: random(-height, 0),
-                    size: random(5, 12),
-                    speedY: random(3, 8),
-                    speedX: random(-2, 2),
-                    color: `hsl(${random(0, 360)}, 70%, 60%)`,
-                    rotation: random(0, 360),
-                    rotationSpeed: random(2, 5)
-                };
-            }
-
-            function drawParticle(p) {
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rotation * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                ctx.restore();
-            }
-
-            function update() {
-                ctx.clearRect(0, 0, width, height);
-                
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    p.y += p.speedY;
-                    p.x += p.speedX;
-                    p.rotation += p.rotationSpeed;
-                    
-                    if (p.y > height) {
-                        particles[i] = createParticle();
-                    }
-                    
-                    drawParticle(p);
-                }
-                
-                animationId = requestAnimationFrame(update);
-            }
-
-            function startConfetti() {
-                resize();
-                for (let i = 0; i < 150; i++) {
-                    particles.push(createParticle());
-                }
-                update();
-                
-                // Stop after 5 seconds
-                setTimeout(() => {
-                    if (animationId) {
-                        cancelAnimationFrame(animationId);
-                        ctx.clearRect(0, 0, width, height);
-                    }
-                }, 5000);
-            }
-
-            window.addEventListener('resize', resize);
-            startConfetti();
-        })();
-
-        // Clear session data after showing success (optional - after 30 seconds)
-        setTimeout(() => {
-            // Uncomment if you want to clear session after showing success page
-            // sessionStorage.clear();
-        }, 30000);
+      let sim = sessionStorage.getItem("simData");
+      if (sim) {
+        let s = JSON.parse(sim);
+        document.getElementById("simNumber").innerText = s.simNumber || "";
+      }
+      document.getElementById("activationDate").innerText =
+        new Date().toLocaleDateString();
     </script>
-</body>
+  </body>
 </html>

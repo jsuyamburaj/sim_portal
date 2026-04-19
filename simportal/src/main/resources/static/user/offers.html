@@ -1,229 +1,315 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activation Success - SIM Activation</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Special Offers | Glass Theme</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-red: #c62828;
-            --dark-red: #8B0000;
-            --white: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.4);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary: #1a237e;
+        --action: #ffb300;
+        --support: #0288d1;
+        --glass-card: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-blur: blur(12px);
+        --white: #fff;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+        min-height: 100vh;
+      }
+      .navbar {
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: var(--white);
+        font-weight: 500;
+      }
+      .nav-links a:hover {
+        color: var(--action);
+      }
+      .progress-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      .progress-steps::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.3);
+        z-index: 1;
+      }
+      .step {
+        position: relative;
+        z-index: 2;
+        background: var(--glass-card);
+        backdrop-filter: blur(4px);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        border: 2px solid var(--glass-border);
+        color: var(--white);
+      }
+      .step.completed {
+        border-color: var(--action);
+        background: var(--action);
+        color: var(--primary);
+      }
+      .step.active {
+        border-color: var(--support);
+        background: var(--support);
+        color: white;
+      }
+      .step-label {
+        position: absolute;
+        top: 45px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        color: var(--white);
+      }
+      .form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: var(--glass-card);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: 1.5rem;
+        padding: 2rem;
+      }
+      .form-container h2 {
+        color: var(--white);
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      .offers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .offer-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(4px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .offer-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .offer-card.selected {
+        border-color: var(--support);
+        background: rgba(2, 136, 209, 0.2);
+      }
+      .offer-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .offer-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--action);
+        margin: 0.5rem 0;
+      }
+      .offer-data,
+      .offer-validity {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .btn-submit {
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .btn-submit:hover {
+        background: #ff8f00;
+        transform: translateY(-2px);
+      }
+      @media (max-width: 768px) {
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          flex-direction: column;
+          gap: 1rem;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 500;
-        }
-
-        .progress-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .progress-steps::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.5);
-            z-index: 1;
-        }
-
-        .step {
-            position: relative;
-            z-index: 2;
-            background: var(--white);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .step.completed {
-            border-color: #4caf50;
-            background: #4caf50;
-            color: var(--white);
-        }
-
         .step-label {
-            position: absolute;
-            top: 45px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            color: var(--white);
+          display: none;
         }
-
-        .success-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid var(--glass-border);
-            text-align: center;
+        .form-container {
+          margin: 1rem;
+          padding: 1.5rem;
         }
-
-        .success-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-
-        .success-container h2 {
-            color: #4caf50;
-            margin-bottom: 1rem;
-        }
-
-        .success-container p {
-            color: var(--white);
-            margin: 1rem 0;
-            font-size: 1.1rem;
-        }
-
-        .status-details {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-
-        .status-details p {
-            margin: 0.5rem 0;
-            color: var(--white);
-        }
-
-        .btn-home {
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 1rem; }
-            .step-label { display: none; }
-            .success-container { margin: 1rem; padding: 1.5rem; }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">📱 Telecom SIM Activation</div>
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/user/status.html">Check Status</a>
-            </div>
+      <div class="nav-container">
+        <div class="logo">📱 SIM Activation Portal</div>
+        <div class="nav-links">
+          <a href="/">Home</a><a href="/user/status.html">Check Status</a>
         </div>
+      </div>
     </nav>
-
     <div class="progress-container">
-        <div class="progress-steps">
-            <div class="step completed">1<span class="step-label">SIM Validation</span></div>
-            <div class="step completed">2<span class="step-label">Customer Details</span></div>
-            <div class="step completed">3<span class="step-label">Address</span></div>
-            <div class="step completed">4<span class="step-label">ID Proof</span></div>
-            <div class="step completed">5<span class="step-label">Offers</span></div>
-            <div class="step completed">6<span class="step-label">Activation</span></div>
+      <div class="progress-steps">
+        <div class="step completed">
+          1<span class="step-label">SIM Validation</span>
         </div>
-    </div>
-
-    <div class="success-container">
-        <div class="success-icon">🎉</div>
-        <h2>Congratulations!</h2>
-        <p>Your SIM has been successfully activated!</p>
-        <div class="status-details">
-            <p><strong>SIM Number:</strong> <span id="simNumber"></span></p>
-            <p><strong>Mobile Number:</strong> <span id="mobileNumber">Will be assigned within 24 hours</span></p>
-            <p><strong>Activation Date:</strong> <span id="activationDate"></span></p>
-            <p><strong>Status:</strong> <span style="color: #4caf50;">ACTIVATED</span></p>
+        <div class="step completed">
+          2<span class="step-label">Customer Details</span>
         </div>
-        <a href="/" class="btn-home">Go to Home</a>
+        <div class="step completed">
+          3<span class="step-label">Address</span>
+        </div>
+        <div class="step completed">
+          4<span class="step-label">ID Proof</span>
+        </div>
+        <div class="step active">5<span class="step-label">Offers</span></div>
+        <div class="step">6<span class="step-label">Activation</span></div>
+      </div>
     </div>
-
+    <div class="form-container">
+      <h2>Step 5: Special Offers</h2>
+      <div id="offersContainer" class="offers-grid">Loading offers...</div>
+      <button id="confirmBtn" class="btn-submit">Confirm & Activate →</button>
+    </div>
     <script>
-        function getFromSession(key) {
-            const value = sessionStorage.getItem(key);
-            return value ? JSON.parse(value) : null;
+      const API_BASE_URL = "http://localhost:8080/api";
+      let selectedOfferId = null;
+      function getSession(key) {
+        let v = sessionStorage.getItem(key);
+        return v ? JSON.parse(v) : null;
+      }
+      function setSession(key, val) {
+        sessionStorage.setItem(key, JSON.stringify(val));
+      }
+      async function loadOffers() {
+        try {
+          let res = await fetch(`${API_BASE_URL}/offers`);
+          let offers = await res.json();
+          let container = document.getElementById("offersContainer");
+          if (offers.length === 0) {
+            container.innerHTML =
+              '<p style="color:white;text-align:center">No offers</p>';
+            return;
+          }
+          container.innerHTML = offers
+            .map(
+              (o) =>
+                `<div class="offer-card" data-offer-id="${o.id}" onclick="selectOffer(${o.id})"><div class="offer-name">${o.name}</div><div class="offer-price">₹${o.price}</div><div class="offer-data">📶 ${o.dataAmount || "Unlimited"}</div><div class="offer-validity">⏱️ ${o.validityDays} days</div><div class="offer-description">${o.description || ""}</div></div>`,
+            )
+            .join("");
+          let saved = getSession("selectedOffer");
+          if (saved && saved.offerId) selectOffer(saved.offerId);
+        } catch (e) {
+          document.getElementById("offersContainer").innerHTML =
+            '<p style="color:white;text-align:center">Error loading offers</p>';
         }
-        
-        const simData = getFromSession('simData');
-        if (simData) {
-            document.getElementById('simNumber').textContent = simData.simNumber;
-        }
-        document.getElementById('activationDate').textContent = new Date().toLocaleDateString();
-        
-        // Clear session after showing success (optional)
-        setTimeout(() => {
-            // sessionStorage.clear(); // Uncomment if you want to clear after success
-        }, 5000);
+      }
+      function selectOffer(id) {
+        selectedOfferId = id;
+        document.querySelectorAll(".offer-card").forEach((card) => {
+          if (parseInt(card.dataset.offerId) === id)
+            card.classList.add("selected");
+          else card.classList.remove("selected");
+        });
+      }
+      document
+        .getElementById("confirmBtn")
+        .addEventListener("click", async () => {
+          if (!selectedOfferId) {
+            alert("Please select an offer");
+            return;
+          }
+          setSession("selectedOffer", { offerId: selectedOfferId });
+          let sim = getSession("simData"),
+            cust = getSession("customerData"),
+            addr = getSession("addressData"),
+            idp = getSession("idProofData"),
+            off = getSession("selectedOffer");
+          let payload = {
+            simNumber: sim?.simNumber,
+            iccid: sim?.iccid,
+            firstName: cust?.firstName,
+            lastName: cust?.lastName,
+            email: cust?.email,
+            phone: cust?.phone,
+            dob: cust?.dob,
+            street: addr?.street,
+            city: addr?.city,
+            state: addr?.state,
+            pincode: addr?.pincode,
+            landmark: addr?.landmark,
+            idType: idp?.idType,
+            idNumber: idp?.idNumber,
+            offerId: off?.offerId,
+          };
+          try {
+            let res = await fetch(`${API_BASE_URL}/customer/save`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            let data = await res.json();
+            if (data.success)
+              window.location.href = "/user/activation-success.html";
+            else alert("Activation failed");
+          } catch (e) {
+            alert("Error during activation");
+          }
+        });
+      loadOffers();
     </script>
-</body>
+  </body>
 </html>

@@ -1,105 +1,340 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User - Admin</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User | Glass Theme</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary-red: #c62828; --dark-red: #8B0000; --white: #ffffff; --glass-bg: rgba(255, 255, 255, 0.25); --glass-border: rgba(255, 255, 255, 0.4); }
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%); min-height: 100vh; }
-        .navbar { background: var(--glass-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); }
-        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--white); }
-        .nav-links { display: flex; gap: 2rem; color: var(--white); }
-        .admin-login-btn { background: var(--white); color: var(--primary-red); border: none; padding: 0.5rem 1.5rem; border-radius: 25px; cursor: pointer; }
-        .admin-container { display: flex; max-width: 1200px; margin: 1rem auto; gap: 1rem; padding: 0 1rem; }
-        .admin-sidebar { width: 250px; background: rgba(139, 0, 0, 0.8); border-radius: 1rem; padding: 1.5rem 0; }
-        .admin-sidebar a { display: block; padding: 0.8rem 1.5rem; color: var(--white); text-decoration: none; }
-        .admin-sidebar a:hover { background: var(--primary-red); }
-        .admin-content { flex: 1; background: var(--glass-bg); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.5rem; border: 1px solid var(--glass-border); }
-        .admin-content h1, .admin-content h3 { color: var(--white); margin-bottom: 1rem; }
-        .form-container { background: rgba(255, 255, 255, 0.15); border-radius: 1rem; padding: 1.5rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--white); }
-        .form-group input, .form-group select { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.9); border: none; border-radius: 8px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .btn-submit { background: var(--primary-red); color: white; padding: 0.75rem; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
-        .btn-submit:hover { background: var(--dark-red); }
-        @media (max-width: 768px) { .admin-container { flex-direction: column; } .admin-sidebar { width: 100%; } .form-row { grid-template-columns: 1fr; } }
+      /* Same as add-user.html – reuse the style block */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary: #1a237e;
+        --action: #ffb300;
+        --support: #0288d1;
+        --glass-card: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-blur: blur(12px);
+        --white: #fff;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+        min-height: 100vh;
+      }
+      .navbar {
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        color: var(--white);
+      }
+      .admin-login-btn {
+        background: var(--action);
+        color: var(--primary);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .admin-container {
+        display: flex;
+        gap: 1rem;
+        max-width: 1400px;
+        margin: 1rem auto;
+        padding: 0 1rem;
+      }
+      .admin-sidebar {
+        width: 250px;
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-radius: 1rem;
+        padding: 1.5rem 0;
+      }
+      .admin-sidebar a {
+        display: block;
+        padding: 0.8rem 1.5rem;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .admin-sidebar a:hover {
+        background: var(--action);
+        color: var(--primary);
+      }
+      .admin-content {
+        flex: 1;
+        background: var(--glass-card);
+        backdrop-filter: var(--glass-blur);
+        border-radius: 1rem;
+        padding: 1.5rem;
+      }
+      .admin-content h1 {
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+      .form-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-group label {
+        display: block;
+        color: var(--white);
+        margin-bottom: 0.5rem;
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .btn-submit {
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .admin-container {
+          flex-direction: column;
+        }
+        .admin-sidebar {
+          width: 100%;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
-</head>
-<body>
-    <nav class="navbar"><div class="nav-container"><div class="logo">📱 Admin Portal</div><div class="nav-links"><span>Admin</span><button id="logoutBtn" class="admin-login-btn">Logout</button></div></div></nav>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">📱 Admin Portal</div>
+        <div class="nav-links">
+          <span>Admin</span
+          ><button id="logoutBtn" class="admin-login-btn">Logout</button>
+        </div>
+      </div>
+    </nav>
     <div class="admin-container">
-        <div class="admin-sidebar"><a href="/admin/admin-dashboard.html">📊 Dashboard</a><a href="/admin/manage-users.html" class="active">👥 Manage Users</a><a href="/admin/manage-offers.html">🎁 Manage Offers</a></div>
-        <div class="admin-content"><h1>Edit User</h1>
+      <div class="admin-sidebar">
+        <a href="/admin/admin-dashboard.html">📊 Dashboard</a
+        ><a href="/admin/manage-users.html" class="active">👥 Manage Users</a
+        ><a href="/admin/manage-offers.html">🎁 Manage Offers</a>
+      </div>
+      <div class="admin-content">
+        <h1>Edit User</h1>
         <div class="form-container">
-            <form id="userForm"><input type="hidden" id="userId">
-                <h3>Personal Info</h3>
-                <div class="form-row"><div class="form-group"><label>First Name</label><input type="text" id="firstName" required></div><div class="form-group"><label>Last Name</label><input type="text" id="lastName" required></div></div>
-                <div class="form-row"><div class="form-group"><label>Email</label><input type="email" id="email" required></div><div class="form-group"><label>Phone</label><input type="tel" id="phone" required></div></div>
-                <div class="form-group"><label>DOB</label><input type="date" id="dob"></div>
-                <div class="form-group"><label>Status</label><select id="activationStatus"><option>PENDING</option><option>VERIFIED</option><option>ACTIVATED</option></select></div>
-                <h3>SIM & Offer</h3>
-                <div class="form-group"><label>SIM Number</label><input type="text" id="simNumber"><small style="color:rgba(255,255,255,0.7)">Current: <span id="currentSim"></span></small></div>
-                <div class="form-group"><label>Offer</label><select id="offerId"><option value="">None</option></select></div>
-                <h3>Address</h3>
-                <div class="form-group"><label>Street</label><input type="text" id="street"></div>
-                <div class="form-row"><div class="form-group"><label>City</label><input type="text" id="city"></div><div class="form-group"><label>State</label><input type="text" id="state"></div></div>
-                <div class="form-row"><div class="form-group"><label>Pincode</label><input type="text" id="pincode"></div><div class="form-group"><label>Landmark</label><input type="text" id="landmark"></div></div>
-                <h3>ID Proof</h3>
-                <div class="form-row"><div class="form-group"><label>ID Type</label><select id="idType"><option>AADHAR</option><option>PAN</option><option>PASSPORT</option></select></div><div class="form-group"><label>ID Number</label><input type="text" id="idNumber"></div></div>
-                <button type="submit" class="btn-submit">Update User</button>
-            </form>
-        </div></div>
+          <form id="userForm">
+            <input type="hidden" id="userId" />
+            <h3 style="color: white">Personal Info</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label
+                ><input type="text" id="firstName" required />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label
+                ><input type="text" id="lastName" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email</label><input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label>Phone</label><input type="tel" id="phone" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>DOB</label><input type="date" id="dob" />
+            </div>
+            <div class="form-group">
+              <label>Status</label
+              ><select id="activationStatus">
+                <option>PENDING</option>
+                <option>VERIFIED</option>
+                <option>ACTIVATED</option>
+              </select>
+            </div>
+            <h3 style="color: white">SIM & Offer</h3>
+            <div class="form-group">
+              <label>SIM Number</label
+              ><input type="text" id="simNumber" /><small
+                style="color: rgba(255, 255, 255, 0.7)"
+                >Current: <span id="currentSim"></span
+              ></small>
+            </div>
+            <div class="form-group">
+              <label>Offer</label
+              ><select id="offerId">
+                <option value="">None</option>
+              </select>
+            </div>
+            <h3 style="color: white">Address</h3>
+            <div class="form-group">
+              <label>Street</label><input type="text" id="street" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>City</label><input type="text" id="city" />
+              </div>
+              <div class="form-group">
+                <label>State</label><input type="text" id="state" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Pincode</label><input type="text" id="pincode" />
+              </div>
+              <div class="form-group">
+                <label>Landmark</label><input type="text" id="landmark" />
+              </div>
+            </div>
+            <h3 style="color: white">ID Proof</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>ID Type</label
+                ><select id="idType">
+                  <option>AADHAR</option>
+                  <option>PAN</option>
+                  <option>PASSPORT</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>ID Number</label><input type="text" id="idNumber" />
+              </div>
+            </div>
+            <button type="submit" class="btn-submit">Update User</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script>
-        const API_BASE_URL = 'http://localhost:8080/api';
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('id');
-        if (!sessionStorage.getItem('adminLoggedIn')) window.location.href = '/';
-        if (!userId) window.location.href = '/admin/manage-users.html';
-        document.getElementById('logoutBtn').onclick = () => { if(confirm('Logout?')){ sessionStorage.removeItem('adminLoggedIn'); window.location.href='/'; } };
-        async function loadOffers() {
-            const res = await fetch(`${API_BASE_URL}/offers`);
-            const offers = await res.json();
-            const select = document.getElementById('offerId');
-            offers.forEach(o => { select.innerHTML += `<option value="${o.id}">${o.name} - ₹${o.price}</option>`; });
+      const API_BASE_URL = "http://localhost:8080/api";
+      const urlParams = new URLSearchParams(window.location.search);
+      const userId = urlParams.get("id");
+      if (!sessionStorage.getItem("adminLoggedIn") || !userId)
+        window.location.href = "/";
+      document.getElementById("logoutBtn").onclick = () => {
+        if (confirm("Logout?")) {
+          sessionStorage.removeItem("adminLoggedIn");
+          window.location.href = "/";
         }
-        async function loadUser() {
-            const res = await fetch(`${API_BASE_URL}/admin/users/${userId}`);
-            const u = await res.json();
-            document.getElementById('userId').value = u.id;
-            document.getElementById('firstName').value = u.firstName || '';
-            document.getElementById('lastName').value = u.lastName || '';
-            document.getElementById('email').value = u.email || '';
-            document.getElementById('phone').value = u.phone || '';
-            document.getElementById('dob').value = u.dob || '';
-            document.getElementById('activationStatus').value = u.activationStatus || 'PENDING';
-            document.getElementById('simNumber').value = u.sim?.simNumber || '';
-            document.getElementById('currentSim').innerText = u.sim?.simNumber || 'None';
-            if(u.selectedOffer) document.getElementById('offerId').value = u.selectedOffer.id;
-            if(u.address){ document.getElementById('street').value = u.address.street||''; document.getElementById('city').value = u.address.city||''; document.getElementById('state').value = u.address.state||''; document.getElementById('pincode').value = u.address.pincode||''; document.getElementById('landmark').value = u.address.landmark||''; }
-            if(u.idProof){ document.getElementById('idType').value = u.idProof.type||'AADHAR'; document.getElementById('idNumber').value = u.idProof.number||''; }
+      };
+      async function loadOffers() {
+        let res = await fetch(`${API_BASE_URL}/offers`);
+        let offers = await res.json();
+        let select = document.getElementById("offerId");
+        offers.forEach(
+          (o) =>
+            (select.innerHTML += `<option value="${o.id}">${o.name} - ₹${o.price}</option>`),
+        );
+      }
+      async function loadUser() {
+        let res = await fetch(`${API_BASE_URL}/admin/users/${userId}`);
+        let u = await res.json();
+        document.getElementById("userId").value = u.id;
+        document.getElementById("firstName").value = u.firstName || "";
+        document.getElementById("lastName").value = u.lastName || "";
+        document.getElementById("email").value = u.email || "";
+        document.getElementById("phone").value = u.phone || "";
+        document.getElementById("dob").value = u.dob || "";
+        document.getElementById("activationStatus").value =
+          u.activationStatus || "PENDING";
+        document.getElementById("simNumber").value = u.sim?.simNumber || "";
+        document.getElementById("currentSim").innerText =
+          u.sim?.simNumber || "None";
+        if (u.selectedOffer)
+          document.getElementById("offerId").value = u.selectedOffer.id;
+        if (u.address) {
+          document.getElementById("street").value = u.address.street || "";
+          document.getElementById("city").value = u.address.city || "";
+          document.getElementById("state").value = u.address.state || "";
+          document.getElementById("pincode").value = u.address.pincode || "";
+          document.getElementById("landmark").value = u.address.landmark || "";
         }
-        document.getElementById('userForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const data = {
-                firstName: document.getElementById('firstName').value, lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value, phone: document.getElementById('phone').value,
-                dob: document.getElementById('dob').value || null, simNumber: document.getElementById('simNumber').value || null,
-                offerId: document.getElementById('offerId').value ? parseInt(document.getElementById('offerId').value) : null,
-                street: document.getElementById('street').value, city: document.getElementById('city').value,
-                state: document.getElementById('state').value, pincode: document.getElementById('pincode').value,
-                landmark: document.getElementById('landmark').value, idType: document.getElementById('idType').value,
-                idNumber: document.getElementById('idNumber').value
-            };
-            const res = await fetch(`${API_BASE_URL}/admin/users/${userId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-            if (res.ok) { alert('User updated!'); window.location.href = '/admin/manage-users.html'; }
-            else alert('Error updating user');
+        if (u.idProof) {
+          document.getElementById("idType").value = u.idProof.type || "AADHAR";
+          document.getElementById("idNumber").value = u.idProof.number || "";
+        }
+      }
+      document.getElementById("userForm").onsubmit = async (e) => {
+        e.preventDefault();
+        let data = {
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          dob: document.getElementById("dob").value || null,
+          simNumber: document.getElementById("simNumber").value || null,
+          offerId: document.getElementById("offerId").value
+            ? parseInt(document.getElementById("offerId").value)
+            : null,
+          street: document.getElementById("street").value,
+          city: document.getElementById("city").value,
+          state: document.getElementById("state").value,
+          pincode: document.getElementById("pincode").value,
+          landmark: document.getElementById("landmark").value,
+          idType: document.getElementById("idType").value,
+          idNumber: document.getElementById("idNumber").value,
         };
-        loadOffers(); loadUser();
+        let res = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          alert("User updated");
+          window.location.href = "/admin/manage-users.html";
+        } else alert("Error");
+      };
+      loadOffers();
+      loadUser();
     </script>
-</body>
+  </body>
 </html>

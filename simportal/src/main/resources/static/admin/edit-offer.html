@@ -1,51 +1,248 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Offer - Admin</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Offer | Glass Theme</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --primary-red: #c62828; --dark-red: #8B0000; --white: #ffffff; --glass-bg: rgba(255, 255, 255, 0.25); }
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%); min-height: 100vh; }
-        .navbar { background: var(--glass-bg); backdrop-filter: blur(12px); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--white); }
-        .admin-login-btn { background: var(--white); color: var(--primary-red); border: none; padding: 0.5rem 1.5rem; border-radius: 25px; cursor: pointer; }
-        .container { max-width: 600px; margin: 2rem auto; background: var(--glass-bg); backdrop-filter: blur(12px); border-radius: 1rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.3); }
-        h1, h3 { color: var(--white); margin-bottom: 1rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--white); }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.9); border: none; border-radius: 8px; }
-        .btn-submit { background: var(--primary-red); color: white; padding: 0.75rem; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
-        .btn-back { background: #666; color: white; padding: 0.5rem 1rem; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-block; margin-bottom: 1rem; }
-        @media (max-width: 768px) { .container { margin: 1rem; } }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --primary: #1a237e;
+        --action: #ffb300;
+        --support: #0288d1;
+        --glass-card: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-blur: blur(12px);
+        --white: #fff;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+        min-height: 100vh;
+      }
+      .navbar {
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        color: var(--white);
+      }
+      .admin-login-btn {
+        background: var(--action);
+        color: var(--primary);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .admin-container {
+        display: flex;
+        gap: 1rem;
+        max-width: 1400px;
+        margin: 1rem auto;
+        padding: 0 1rem;
+      }
+      .admin-sidebar {
+        width: 250px;
+        background: rgba(26, 35, 126, 0.3);
+        backdrop-filter: var(--glass-blur);
+        border-radius: 1rem;
+        padding: 1.5rem 0;
+      }
+      .admin-sidebar a {
+        display: block;
+        padding: 0.8rem 1.5rem;
+        color: var(--white);
+        text-decoration: none;
+      }
+      .admin-sidebar a:hover {
+        background: var(--action);
+        color: var(--primary);
+      }
+      .admin-content {
+        flex: 1;
+        background: var(--glass-card);
+        backdrop-filter: var(--glass-blur);
+        border-radius: 1rem;
+        padding: 1.5rem;
+      }
+      .admin-content h1 {
+        color: var(--white);
+        margin-bottom: 1rem;
+      }
+      .form-container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        max-width: 600px;
+      }
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-group label {
+        display: block;
+        color: var(--white);
+        margin-bottom: 0.5rem;
+      }
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+      }
+      .btn-submit {
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        width: 100%;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .admin-container {
+          flex-direction: column;
+        }
+        .admin-sidebar {
+          width: 100%;
+        }
+      }
     </style>
-</head>
-<body>
-    <div style="max-width: 1200px; margin: 0 auto;"><div class="navbar"><div class="logo">📱 Admin Portal</div><button id="logoutBtn" class="admin-login-btn">Logout</button></div></div>
-    <div class="container">
-        <a href="/admin/manage-offers.html" class="btn-back">← Back to Offers</a>
-        <h1>Add New Offer</h1>
-        <form id="offerForm">
-            <div class="form-group"><label>Offer Name</label><input type="text" id="offerName" required placeholder="e.g., Summer Special"></div>
-            <div class="form-group"><label>Description</label><textarea id="offerDesc" rows="3" placeholder="Brief description"></textarea></div>
-            <div class="form-group"><label>Price (₹)</label><input type="number" id="offerPrice" required step="0.01"></div>
-            <div class="form-group"><label>Data Allowance</label><input type="text" id="offerData" placeholder="e.g., 2GB/day"></div>
-            <div class="form-group"><label>Validity (Days)</label><input type="number" id="offerValidity" required></div>
-            <button type="submit" class="btn-submit">Create Offer</button>
-        </form>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">📱 Admin Portal</div>
+        <div class="nav-links">
+          <span>Admin</span
+          ><button id="logoutBtn" class="admin-login-btn">Logout</button>
+        </div>
+      </div>
+    </nav>
+    <div class="admin-container">
+      <div class="admin-sidebar">
+        <a href="/admin/admin-dashboard.html">📊 Dashboard</a
+        ><a href="/admin/manage-users.html">👥 Manage Users</a
+        ><a href="/admin/manage-offers.html" class="active">🎁 Manage Offers</a>
+      </div>
+      <div class="admin-content">
+        <h1>Edit Offer</h1>
+        <div class="form-container">
+          <form id="offerForm">
+            <input type="hidden" id="offerId" />
+            <div class="form-group">
+              <label>Offer Name</label
+              ><input type="text" id="offerName" required />
+            </div>
+            <div class="form-group">
+              <label>Description</label
+              ><textarea id="offerDesc" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Price (₹)</label
+              ><input type="number" id="offerPrice" required step="0.01" />
+            </div>
+            <div class="form-group">
+              <label>Data Allowance</label><input type="text" id="offerData" />
+            </div>
+            <div class="form-group">
+              <label>Validity (Days)</label
+              ><input type="number" id="offerValidity" required />
+            </div>
+            <div class="form-group">
+              <label>Status</label
+              ><select id="offerStatus">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-submit">Update Offer</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script>
-        const API_BASE_URL = 'http://localhost:8080/api';
-        if (!sessionStorage.getItem('adminLoggedIn')) window.location.href = '/';
-        document.getElementById('logoutBtn').onclick = () => { if(confirm('Logout?')){ sessionStorage.removeItem('adminLoggedIn'); window.location.href='/'; } };
-        document.getElementById('offerForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const data = { name: document.getElementById('offerName').value, description: document.getElementById('offerDesc').value, price: parseFloat(document.getElementById('offerPrice').value), dataAmount: document.getElementById('offerData').value, validityDays: parseInt(document.getElementById('offerValidity').value), active: true };
-            const res = await fetch(`${API_BASE_URL}/offers`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-            if (res.ok) { alert('Offer created!'); window.location.href = '/admin/manage-offers.html'; }
-            else alert('Error creating offer');
+      const API_BASE_URL = "http://localhost:8080/api";
+      const urlParams = new URLSearchParams(window.location.search);
+      const offerId = urlParams.get("id");
+      if (!sessionStorage.getItem("adminLoggedIn") || !offerId)
+        window.location.href = "/";
+      document.getElementById("logoutBtn").onclick = () => {
+        if (confirm("Logout?")) {
+          sessionStorage.removeItem("adminLoggedIn");
+          window.location.href = "/";
+        }
+      };
+      async function loadOffer() {
+        let res = await fetch(`${API_BASE_URL}/offers/${offerId}`);
+        let o = await res.json();
+        document.getElementById("offerId").value = o.id;
+        document.getElementById("offerName").value = o.name;
+        document.getElementById("offerDesc").value = o.description || "";
+        document.getElementById("offerPrice").value = o.price;
+        document.getElementById("offerData").value = o.dataAmount || "";
+        document.getElementById("offerValidity").value = o.validityDays;
+        document.getElementById("offerStatus").value = o.active
+          ? "true"
+          : "false";
+      }
+      document.getElementById("offerForm").onsubmit = async (e) => {
+        e.preventDefault();
+        let data = {
+          name: document.getElementById("offerName").value,
+          description: document.getElementById("offerDesc").value,
+          price: parseFloat(document.getElementById("offerPrice").value),
+          dataAmount: document.getElementById("offerData").value,
+          validityDays: parseInt(
+            document.getElementById("offerValidity").value,
+          ),
+          active: document.getElementById("offerStatus").value === "true",
         };
+        let res = await fetch(`${API_BASE_URL}/offers/${offerId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          alert("Offer updated");
+          window.location.href = "/admin/manage-offers.html";
+        } else alert("Error");
+      };
+      loadOffer();
     </script>
-</body>
+  </body>
 </html>

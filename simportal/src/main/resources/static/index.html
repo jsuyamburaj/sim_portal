@@ -1,428 +1,423 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIM Activation Portal | Telecom</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIM Activation Portal | Glass Theme</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        :root {
-            --primary-red: #c62828;
-            --dark-red: #8B0000;
-            --white: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.4);
-        }
+      :root {
+        --primary: #1a237e;
+        --action: #ffb300;
+        --support: #0288d1;
+        --surface: #f8f9fb;
+        --glass-bg: rgba(26, 35, 126, 0.3);
+        --glass-card: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --glass-blur: blur(12px);
+        --white: #ffffff;
+        --gray-dark: #333;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark-red) 0%, var(--primary-red) 100%);
-            min-height: 100vh;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+        min-height: 100vh;
+      }
 
-        /* Glass Navigation */
-        .navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+      /* Glass navigation */
+      .navbar {
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--white);
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--white);
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: var(--action);
+      }
+
+      .admin-login-btn {
+        background: var(--action);
+        color: var(--primary);
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .admin-login-btn:hover {
+        background: #ff8f00;
+        transform: scale(1.05);
+      }
+
+      /* Hero section */
+      .hero {
+        background: var(--glass-card);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border);
+        border-radius: 2rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        color: var(--white);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 1.5rem;
+      }
+
+      .btn-start {
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.8rem 2rem;
+        border-radius: 40px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+        transition: 0.3s;
+      }
+
+      .btn-start:hover {
+        background: #ff8f00;
+        transform: translateY(-2px);
+      }
+
+      /* Features grid */
+      .features {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      .features h2 {
+        text-align: center;
+        color: var(--white);
+        margin-bottom: 2rem;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background: var(--glass-card);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+      }
+
+      .feature-card h3 {
+        color: var(--white);
+        margin: 1rem 0 0.5rem;
+      }
+
+      .feature-card p {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* Glass modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: var(--glass-card);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        max-width: 400px;
+        margin: 10% auto;
+        animation: slideDown 0.3s;
+      }
+
+      .modal-header {
+        background: var(--primary);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 1rem 1rem 0 0;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .close {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .form-group {
+        padding: 1rem 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        color: var(--white);
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+      }
+
+      .btn-login {
+        width: calc(100% - 3rem);
+        margin: 0 1.5rem 1.5rem;
+        background: var(--action);
+        color: var(--primary);
+        padding: 0.75rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.7);
+        border-top: 1px solid var(--glass-border);
+        margin-top: 2rem;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+          flex-direction: column;
+          gap: 1rem;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 500;
-            transition: opacity 0.3s;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            opacity: 0.8;
-        }
-
-        .admin-login-btn {
-            background: var(--white);
-            color: var(--primary-red);
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.3s;
-        }
-
-        .admin-login-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Glass Container */
-        .glass-container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 2rem auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border);
-        }
-
-        /* Hero Section */
         .hero {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            margin-bottom: 2rem;
+          margin: 1rem;
+          padding: 2rem 1rem;
         }
-
-        .hero h1 {
-            color: var(--white);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-start {
-            background: var(--white);
-            color: var(--primary-red);
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-start:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Feature Grid */
         .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+          grid-template-columns: 1fr;
         }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(8px);
-            padding: 2rem;
-            border-radius: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-
-        .feature-card p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .features h2 {
-            color: var(--white);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            margin: 10% auto;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 15px;
-            animation: slideDown 0.3s;
-        }
-
-        .modal-header {
-            padding: 1rem 1.5rem;
-            background: var(--primary-red);
-            color: var(--white);
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close {
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-group {
-            padding: 1rem 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .btn-login {
-            width: calc(100% - 3rem);
-            margin: 0 1.5rem 1.5rem;
-            padding: 0.75rem;
-            background: var(--primary-red);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .error-message {
-            color: var(--primary-red);
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-icon">📱</span>
-                <span class="logo-text">Telecom SIM Activation</span>
-            </div>
-            <div class="nav-links">
-                <a href="/" class="active">Home</a>
-                <a href="/user/status.html">Check Status</a>
-                <button class="admin-login-btn" id="adminLoginBtn">Admin Login</button>
-            </div>
+      <div class="nav-container">
+        <div class="logo">📱 SIM Activation Portal</div>
+        <div class="nav-links">
+          <a href="/" class="active">Home</a>
+          <a href="/user/status.html">Check Status</a>
+          <button class="admin-login-btn" id="adminLoginBtn">
+            Admin Login
+          </button>
         </div>
+      </div>
     </nav>
 
-    <div class="glass-container">
-        <div class="hero">
-            <h1>Welcome to SIM Activation Portal</h1>
-            <p>Activate your new SIM in minutes with our simple step-by-step process</p>
-            <a href="/user/sim-validation.html" class="btn-start">Start Activation →</a>
-        </div>
+    <div class="hero">
+      <h1>Welcome to SIM Activation Portal</h1>
+      <p>
+        Activate your new SIM in minutes with our secure glass‑themed interface
+      </p>
+      <a href="/user/sim-validation.html" class="btn-start"
+        >Start Activation →</a
+      >
+    </div>
 
-        <div class="features">
-            <h2>Our Services</h2>
-            <div class="feature-grid">
-                <div class="feature-card" onclick="window.location.href='/user/sim-validation.html'">
-                    <div class="feature-icon">✅</div>
-                    <h3>SIM Validation</h3>
-                    <p>Verify your SIM number instantly</p>
-                </div>
-                <div class="feature-card" onclick="window.location.href='/user/customer-validation.html'">
-                    <div class="feature-icon">👤</div>
-                    <h3>Customer Validation</h3>
-                    <p>Submit your personal details securely</p>
-                </div>
-                <div class="feature-card" onclick="window.location.href='/user/address.html'">
-                    <div class="feature-icon">📍</div>
-                    <h3>Address Update</h3>
-                    <p>Update your communication address</p>
-                </div>
-                <div class="feature-card" onclick="window.location.href='/user/id-proof.html'">
-                    <div class="feature-icon">🪪</div>
-                    <h3>ID Proof Upload</h3>
-                    <p>Upload Aadhar, PAN, or Passport</p>
-                </div>
-                <div class="feature-card" onclick="window.location.href='/user/offers.html'">
-                    <div class="feature-icon">🎁</div>
-                    <h3>Exclusive Offers</h3>
-                    <p>Choose from best prepaid/postpaid plans</p>
-                </div>
-                <div class="feature-card" onclick="window.location.href='/user/status.html'">
-                    <div class="feature-icon">📊</div>
-                    <h3>Status Check</h3>
-                    <p>Track your activation status</p>
-                </div>
-            </div>
+    <div class="features">
+      <h2>Our Services</h2>
+      <div class="feature-grid">
+        <div
+          class="feature-card"
+          onclick="location.href = '/user/sim-validation.html'"
+        >
+          <div class="feature-icon">✅</div>
+          <h3>SIM Validation</h3>
+          <p>Verify your SIM number instantly</p>
         </div>
+        <div
+          class="feature-card"
+          onclick="location.href = '/user/customer-validation.html'"
+        >
+          <div class="feature-icon">👤</div>
+          <h3>Customer Validation</h3>
+          <p>First name, last name, email & DOB</p>
+        </div>
+        <div
+          class="feature-card"
+          onclick="location.href = '/user/address.html'"
+        >
+          <div class="feature-icon">📍</div>
+          <h3>Address Update</h3>
+          <p>Update your communication address</p>
+        </div>
+        <div
+          class="feature-card"
+          onclick="location.href = '/user/id-proof.html'"
+        >
+          <div class="feature-icon">🪪</div>
+          <h3>ID Proof Validation</h3>
+          <p>Aadhar, PAN, Passport, etc.</p>
+        </div>
+        <div class="feature-card" onclick="location.href = '/user/offers.html'">
+          <div class="feature-icon">🎁</div>
+          <h3>Special Offers</h3>
+          <p>Choose best prepaid/postpaid plans</p>
+        </div>
+        <div class="feature-card" onclick="location.href = '/user/status.html'">
+          <div class="feature-icon">📊</div>
+          <h3>Status Check</h3>
+          <p>Track your activation status</p>
+        </div>
+      </div>
+    </div>
 
-        <div class="footer">
-            <p>© 2025 Telecom SIM Activation Portal | Secure & Fast</p>
-        </div>
+    <div class="footer">
+      <p>© 2025 SIM Activation Portal | Secure & Fast Activation</p>
     </div>
 
     <!-- Admin Login Modal -->
     <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Admin Login</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <form id="adminLoginForm">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="adminUsername" required placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="adminPassword" required placeholder="Enter password">
-                </div>
-                <button type="submit" class="btn-login">Login</button>
-                <div id="loginError" class="error-message"></div>
-            </form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Admin Login</h2>
+          <span class="close" onclick="closeModal()">&times;</span>
         </div>
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="adminUsername" required />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="adminPassword" required />
+          </div>
+          <button type="submit" class="btn-login">Login</button>
+          <div
+            id="loginError"
+            style="color: #ff9800; text-align: center; margin-bottom: 1rem"
+          ></div>
+        </form>
+      </div>
     </div>
 
     <script>
-        const API_BASE_URL = 'http://localhost:8080/api';
-        
-        const modal = document.getElementById('adminModal');
-        const adminBtn = document.getElementById('adminLoginBtn');
-        
-        adminBtn.onclick = function() {
-            modal.style.display = 'block';
-        }
-        
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
+      const API_BASE_URL = "http://localhost:8080/api";
+      const modal = document.getElementById("adminModal");
+      document.getElementById("adminLoginBtn").onclick = () =>
+        (modal.style.display = "block");
+      window.onclick = (e) => {
+        if (e.target == modal) modal.style.display = "none";
+      };
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      document
+        .getElementById("adminLoginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("adminUsername").value;
+          const password = document.getElementById("adminPassword").value;
+          try {
+            const res = await fetch(`${API_BASE_URL}/admin/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+            const data = await res.json();
+            if (data.success) {
+              sessionStorage.setItem("adminLoggedIn", "true");
+              window.location.href = "/admin/admin-dashboard.html";
+            } else {
+              document.getElementById("loginError").innerText =
+                "Invalid credentials";
             }
-        }
-        
-        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('adminUsername').value;
-            const password = document.getElementById('adminPassword').value;
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/admin/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const result = await response.json();
-                
-                if (result.success) {
-                    sessionStorage.setItem('adminLoggedIn', 'true');
-                    window.location.href = '/admin/admin-dashboard.html';
-                } else {
-                    document.getElementById('loginError').textContent = 'Invalid credentials';
-                }
-            } catch (error) {
-                document.getElementById('loginError').textContent = 'Login failed. Please try again.';
-            }
+          } catch (err) {
+            document.getElementById("loginError").innerText = "Login failed";
+          }
         });
     </script>
-</body>
+  </body>
 </html>

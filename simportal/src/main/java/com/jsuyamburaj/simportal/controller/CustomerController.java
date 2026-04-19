@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customer")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8080")
 public class CustomerController {
     private final CustomerService customerService;
     private final SimService simService;
@@ -23,11 +23,22 @@ public class CustomerController {
     
     @PostMapping("/validate")
     public ResponseEntity<Map<String, Object>> validateCustomer(@RequestBody Map<String, String> request) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("valid", true);
-        response.put("message", "Customer details validated");
-        return ResponseEntity.ok(response);
+    String simNumber = request.get("simNumber");
+    Map<String, Object> response = new HashMap<>();
+    // Basic validation
+    if (simNumber == null || simNumber.length() != 20) {
+        response.put("valid", false);
+        response.put("message", "Invalid SIM number. Must be 20 digits.");
+        return ResponseEntity.badRequest().body(response);
     }
+
+    // Example logic (you can connect DB later)
+    response.put("valid", true);
+    response.put("message", "SIM validated successfully");
+
+    return ResponseEntity.ok(response);
+    }
+    
     
     @PostMapping("/save")
     public ResponseEntity<Map<String, Object>> saveCustomer(@RequestBody ActivationRequest request) {

@@ -1,423 +1,782 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIM Activation Portal | Glass Theme</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --primary: #1a237e;
-        --action: #ffb300;
-        --support: #0288d1;
-        --surface: #f8f9fb;
-        --glass-bg: rgba(26, 35, 126, 0.3);
-        --glass-card: rgba(255, 255, 255, 0.12);
-        --glass-border: rgba(255, 255, 255, 0.25);
-        --glass-blur: blur(12px);
-        --white: #ffffff;
-        --gray-dark: #333;
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
-        min-height: 100vh;
-      }
-
-      /* Glass navigation */
-      .navbar {
-        background: var(--glass-bg);
-        backdrop-filter: var(--glass-blur);
-        border-bottom: 1px solid var(--glass-border);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--white);
-        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .nav-links a {
-        text-decoration: none;
-        color: var(--white);
-        font-weight: 500;
-        transition: 0.3s;
-      }
-
-      .nav-links a:hover,
-      .nav-links a.active {
-        color: var(--action);
-      }
-
-      .admin-login-btn {
-        background: var(--action);
-        color: var(--primary);
-        border: none;
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .admin-login-btn:hover {
-        background: #ff8f00;
-        transform: scale(1.05);
-      }
-
-      /* Hero section */
-      .hero {
-        background: var(--glass-card);
-        backdrop-filter: blur(8px);
-        border: 1px solid var(--glass-border);
-        border-radius: 2rem;
-        margin: 2rem auto;
-        max-width: 800px;
-        padding: 3rem 2rem;
-        text-align: center;
-      }
-
-      .hero h1 {
-        color: var(--white);
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-
-      .hero p {
-        color: rgba(255, 255, 255, 0.9);
-        margin-bottom: 1.5rem;
-      }
-
-      .btn-start {
-        background: var(--action);
-        color: var(--primary);
-        padding: 0.8rem 2rem;
-        border-radius: 40px;
-        text-decoration: none;
-        font-weight: 600;
-        display: inline-block;
-        transition: 0.3s;
-      }
-
-      .btn-start:hover {
-        background: #ff8f00;
-        transform: translateY(-2px);
-      }
-
-      /* Features grid */
-      .features {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 0 2rem;
-      }
-
-      .features h2 {
-        text-align: center;
-        color: var(--white);
-        margin-bottom: 2rem;
-      }
-
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-      }
-
-      .feature-card {
-        background: var(--glass-card);
-        backdrop-filter: blur(8px);
-        border: 1px solid var(--glass-border);
-        border-radius: 1.5rem;
-        padding: 2rem;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.3s;
-      }
-
-      .feature-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .feature-icon {
-        font-size: 3rem;
-      }
-
-      .feature-card h3 {
-        color: var(--white);
-        margin: 1rem 0 0.5rem;
-      }
-
-      .feature-card p {
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      /* Glass modal */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 2000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(5px);
-      }
-
-      .modal-content {
-        background: var(--glass-card);
-        backdrop-filter: var(--glass-blur);
-        border: 1px solid var(--glass-border);
-        border-radius: 1rem;
-        max-width: 400px;
-        margin: 10% auto;
-        animation: slideDown 0.3s;
-      }
-
-      .modal-header {
-        background: var(--primary);
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 1rem 1rem 0 0;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .close {
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-
-      .form-group {
-        padding: 1rem 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        color: var(--white);
-        margin-bottom: 0.5rem;
-      }
-
-      .form-group input {
-        width: 100%;
-        padding: 0.75rem;
-        background: rgba(255, 255, 255, 0.85);
-        border: 1px solid var(--glass-border);
-        border-radius: 8px;
-      }
-
-      .btn-login {
-        width: calc(100% - 3rem);
-        margin: 0 1.5rem 1.5rem;
-        background: var(--action);
-        color: var(--primary);
-        padding: 0.75rem;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .footer {
-        text-align: center;
-        padding: 2rem;
-        color: rgba(255, 255, 255, 0.7);
-        border-top: 1px solid var(--glass-border);
-        margin-top: 2rem;
-      }
-
-      @keyframes slideDown {
-        from {
-          transform: translateY(-50px);
-          opacity: 0;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
 
-      @media (max-width: 768px) {
+        :root {
+            --primary: #1a237e;
+            --action: #ffb300;
+            --support: #0288d1;
+            --surface: #f8f9fb;
+            --glass-bg: rgba(26, 35, 126, 0.3);
+            --glass-card: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-blur: blur(12px);
+            --white: #ffffff;
+            --gray-dark: #333;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #0d1757 100%);
+            min-height: 100vh;
+        }
+
+        /* Glass navigation */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
         .nav-container {
-          flex-direction: column;
-          gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--action);
+        }
+
+        .admin-login-btn {
+            background: var(--action);
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background: #ff8f00;
+            transform: scale(1.05);
+        }
+
+        /* Hero section */
         .hero {
-          margin: 1rem;
-          padding: 2rem 1rem;
+            background: var(--glass-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            padding: 3rem 2rem;
+            text-align: center;
         }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-start {
+            background: var(--action);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-start:hover {
+            background: #ff8f00;
+            transform: translateY(-2px);
+        }
+
+        /* How It Works - Attractive Progress Bar */
+        .how-it-works {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--glass-card);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--action);
+        }
+
+        .progress-container {
+            padding: 1rem;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            background: var(--glass-card);
+            border: 3px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            transition: 0.3s;
+        }
+
+        .step:nth-child(1) .step-circle {
+            border-color: var(--action);
+            background: var(--action);
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .step-desc {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Features grid */
+        .features {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .features h2 {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+
         .feature-grid {
-          grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
         }
-      }
+
+        .feature-card {
+            background: var(--glass-card);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+        }
+
+        .feature-card h3 {
+            color: var(--white);
+            margin: 1rem 0 0.5rem;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: var(--glass-card);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+        }
+
+        .contact-icon {
+            font-size: 1.8rem;
+        }
+
+        .contact-text h4 {
+            color: var(--action);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: var(--action);
+            color: var(--primary);
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #ff8f00;
+            transform: translateY(-2px);
+        }
+
+        /* Glass modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--glass-card);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            max-width: 400px;
+            margin: 10% auto;
+            animation: slideDown 0.3s;
+        }
+
+        .modal-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem 1rem 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal .form-group {
+            padding: 1rem 1.5rem;
+        }
+
+        .modal .form-group label {
+            display: block;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+        }
+
+        .btn-login {
+            width: calc(100% - 3rem);
+            margin: 0 1.5rem 1.5rem;
+            background: var(--action);
+            color: var(--primary);
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--glass-border);
+            margin-top: 3rem;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--action);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+            transition: 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--action);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            background: var(--action);
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero {
+                margin: 1rem;
+                padding: 2rem 1rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .progress-steps {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .progress-steps::before {
+                display: none;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">📱 SIM Activation Portal</div>
-        <div class="nav-links">
-          <a href="/" class="active">Home</a>
-          <a href="/user/status.html">Check Status</a>
-          <button class="admin-login-btn" id="adminLoginBtn">
-            Admin Login
-          </button>
+        <div class="nav-container">
+            <div class="logo">📱 SIM Activation Portal</div>
+            <div class="nav-links">
+                <a href="/" class="active">Home</a>
+                <a href="#contact">Contact</a>
+                <a href="/user/status.html">Check Status</a>
+                <button class="admin-login-btn" id="adminLoginBtn">Admin Login</button>
+            </div>
         </div>
-      </div>
     </nav>
 
     <div class="hero">
-      <h1>Welcome to SIM Activation Portal</h1>
-      <p>
-        Activate your new SIM in minutes with our secure glass‑themed interface
-      </p>
-      <a href="/user/sim-validation.html" class="btn-start"
-        >Start Activation →</a
-      >
+        <h1>Welcome to SIM Activation Portal</h1>
+        <p>Activate your new SIM in minutes with our secure glass‑themed interface</p>
+        <a href="/user/sim-validation.html" class="btn-start">Start Activation →</a>
+    </div>
+
+    <!-- Attractive Progress Bar -->
+    <div class="how-it-works">
+        <h2 class="section-title">⚡ How It Works</h2>
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="step">
+                    <div class="step-circle">1</div>
+                    <div class="step-title">Validate SIM</div>
+                    <div class="step-desc">Enter SIM details</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">2</div>
+                    <div class="step-title">Customer Details</div>
+                    <div class="step-desc">Provide personal info</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">3</div>
+                    <div class="step-title">ID Verification</div>
+                    <div class="step-desc">Upload ID proof</div>
+                </div>
+                <div class="step">
+                    <div class="step-circle">4</div>
+                    <div class="step-title">Activation</div>
+                    <div class="step-desc">Complete activation</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="features">
-      <h2>Our Services</h2>
-      <div class="feature-grid">
-        <div
-          class="feature-card"
-          onclick="location.href = '/user/sim-validation.html'"
-        >
-          <div class="feature-icon">✅</div>
-          <h3>SIM Validation</h3>
-          <p>Verify your SIM number instantly</p>
+        <h2>Our Services</h2>
+        <div class="feature-grid">
+            <div class="feature-card" onclick="location.href = '/user/sim-validation.html'">
+                <div class="feature-icon">✅</div>
+                <h3>SIM Validation</h3>
+                <p>Verify your SIM number instantly</p>
+            </div>
+            <div class="feature-card" onclick="location.href = '/user/customer-validation.html'">
+                <div class="feature-icon">👤</div>
+                <h3>Customer Validation</h3>
+                <p>First name, last name, email & DOB</p>
+            </div>
+            <div class="feature-card" onclick="location.href = '/user/address.html'">
+                <div class="feature-icon">📍</div>
+                <h3>Address Update</h3>
+                <p>Update your communication address</p>
+            </div>
+            <div class="feature-card" onclick="location.href = '/user/id-proof.html'">
+                <div class="feature-icon">🪪</div>
+                <h3>ID Proof Validation</h3>
+                <p>Aadhar, PAN, Passport, etc.</p>
+            </div>
+            <div class="feature-card" onclick="location.href = '/user/offers.html'">
+                <div class="feature-icon">🎁</div>
+                <h3>Special Offers</h3>
+                <p>Choose best prepaid/postpaid plans</p>
+            </div>
+            <div class="feature-card" onclick="location.href = '/user/status.html'">
+                <div class="feature-icon">📊</div>
+                <h3>Status Check</h3>
+                <p>Track your activation status</p>
+            </div>
         </div>
-        <div
-          class="feature-card"
-          onclick="location.href = '/user/customer-validation.html'"
-        >
-          <div class="feature-icon">👤</div>
-          <h3>Customer Validation</h3>
-          <p>First name, last name, email & DOB</p>
-        </div>
-        <div
-          class="feature-card"
-          onclick="location.href = '/user/address.html'"
-        >
-          <div class="feature-icon">📍</div>
-          <h3>Address Update</h3>
-          <p>Update your communication address</p>
-        </div>
-        <div
-          class="feature-card"
-          onclick="location.href = '/user/id-proof.html'"
-        >
-          <div class="feature-icon">🪪</div>
-          <h3>ID Proof Validation</h3>
-          <p>Aadhar, PAN, Passport, etc.</p>
-        </div>
-        <div class="feature-card" onclick="location.href = '/user/offers.html'">
-          <div class="feature-icon">🎁</div>
-          <h3>Special Offers</h3>
-          <p>Choose best prepaid/postpaid plans</p>
-        </div>
-        <div class="feature-card" onclick="location.href = '/user/status.html'">
-          <div class="feature-icon">📊</div>
-          <h3>Status Check</h3>
-          <p>Track your activation status</p>
-        </div>
-      </div>
     </div>
 
+    <!-- Contact Section -->
+    <div class="contact-section" id="contact">
+        <h2 class="section-title">📞 Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-text">
+                        <h4>Call Us</h4>
+                        <p>1800-123-4567</p>
+                        <p>+91 98765 43210</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <p>support@simactivation.com</p>
+                        <p>care@telecom.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <h4>Address</h4>
+                        <p>Tech Park, Andheri East,</p>
+                        <p>Mumbai - 400093, India</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">⏰</div>
+                    <div class="contact-text">
+                        <h4>Working Hours</h4>
+                        <p>Mon-Sat: 9AM - 8PM</p>
+                        <p>Sun: 10AM - 4PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <input type="text" id="contactName" placeholder="Your Name *">
+                <input type="email" id="contactEmail" placeholder="Your Email *">
+                <input type="tel" id="contactPhone" placeholder="Phone Number">
+                <select id="contactSubject">
+                    <option value="">Select Subject</option>
+                    <option value="SIM Activation">SIM Activation Issue</option>
+                    <option value="Technical Support">Technical Support</option>
+                    <option value="Billing">Billing Inquiry</option>
+                    <option value="Feedback">Feedback</option>
+                </select>
+                <textarea id="contactMessage" rows="4" placeholder="Your Message *"></textarea>
+                <button class="btn-submit" onclick="sendMessage()">Send Message →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Footer -->
     <div class="footer">
-      <p>© 2025 SIM Activation Portal | Secure & Fast Activation</p>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>📱 SIM Activation Portal</h4>
+                <p>Quick & easy SIM activation with our automated portal. No more waiting in queues!</p>
+                <div class="social-links">
+                    <div class="social-icon" onclick="alert('Facebook page coming soon!')">📘</div>
+                    <div class="social-icon" onclick="alert('Twitter page coming soon!')">🐦</div>
+                    <div class="social-icon" onclick="alert('Instagram page coming soon!')">📷</div>
+                    <div class="social-icon" onclick="alert('LinkedIn page coming soon!')">💼</div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="/">Home</a>
+                <a href="#contact">Contact Us</a>
+                <a href="/user/status.html">Check Status</a>
+                <a href="/user/sim-validation.html">Activate SIM</a>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <a href="#" onclick="alert('FAQ page coming soon!')">FAQ</a>
+                <a href="#" onclick="alert('Terms page coming soon!')">Terms & Conditions</a>
+                <a href="#" onclick="alert('Privacy policy coming soon!')">Privacy Policy</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe for updates and offers</p>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                    <input type="email" id="newsletterEmail" placeholder="Your email" style="padding: 0.5rem; border-radius: 8px; border: none; flex: 1; background: rgba(255,255,255,0.85);">
+                    <button onclick="subscribeNewsletter()" style="background: var(--action); border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SIM Activation Portal. All rights reserved. | Designed for seamless SIM activation</p>
+        </div>
     </div>
 
     <!-- Admin Login Modal -->
     <div id="adminModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Admin Login</h2>
-          <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Login</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="btn-login">Login</button>
+                <div id="loginError" style="color: #ff9800; text-align: center; margin-bottom: 1rem"></div>
+            </form>
         </div>
-        <form id="adminLoginForm">
-          <div class="form-group">
-            <label>Username</label>
-            <input type="text" id="adminUsername" required />
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="adminPassword" required />
-          </div>
-          <button type="submit" class="btn-login">Login</button>
-          <div
-            id="loginError"
-            style="color: #ff9800; text-align: center; margin-bottom: 1rem"
-          ></div>
-        </form>
-      </div>
     </div>
 
     <script>
-      const API_BASE_URL = "http://localhost:8080/api";
-      const modal = document.getElementById("adminModal");
-      document.getElementById("adminLoginBtn").onclick = () =>
-        (modal.style.display = "block");
-      window.onclick = (e) => {
-        if (e.target == modal) modal.style.display = "none";
-      };
-      function closeModal() {
-        modal.style.display = "none";
-      }
+        const API_BASE_URL = "http://localhost:8080/api";
+        const modal = document.getElementById("adminModal");
+        document.getElementById("adminLoginBtn").onclick = () => modal.style.display = "block";
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+        function closeModal() { modal.style.display = "none"; }
 
-      document
-        .getElementById("adminLoginForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const username = document.getElementById("adminUsername").value;
-          const password = document.getElementById("adminPassword").value;
-          try {
-            const res = await fetch(`${API_BASE_URL}/admin/login`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, password }),
-            });
-            const data = await res.json();
-            if (data.success) {
-              sessionStorage.setItem("adminLoggedIn", "true");
-              window.location.href = "/admin/admin-dashboard.html";
-            } else {
-              document.getElementById("loginError").innerText =
-                "Invalid credentials";
+        document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const username = document.getElementById("adminUsername").value;
+            const password = document.getElementById("adminPassword").value;
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
+                const data = await res.json();
+                if (data.success) {
+                    sessionStorage.setItem("adminLoggedIn", "true");
+                    window.location.href = "/admin/admin-dashboard.html";
+                } else {
+                    document.getElementById("loginError").innerText = "Invalid credentials";
+                }
+            } catch (err) {
+                document.getElementById("loginError").innerText = "Login failed";
             }
-          } catch (err) {
-            document.getElementById("loginError").innerText = "Login failed";
-          }
         });
+
+        function sendMessage() {
+            const name = document.getElementById("contactName").value;
+            const email = document.getElementById("contactEmail").value;
+            const message = document.getElementById("contactMessage").value;
+            if (!name || !email || !message) {
+                alert("Please fill all required fields");
+                return;
+            }
+            alert("Thank you for your message! Our team will get back to you within 24 hours.");
+            document.getElementById("contactName").value = "";
+            document.getElementById("contactEmail").value = "";
+            document.getElementById("contactPhone").value = "";
+            document.getElementById("contactSubject").value = "";
+            document.getElementById("contactMessage").value = "";
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById("newsletterEmail").value;
+            if (!email) {
+                alert("Please enter your email address");
+                return;
+            }
+            alert("Thank you for subscribing! You'll receive updates and offers.");
+            document.getElementById("newsletterEmail").value = "";
+        }
     </script>
-  </body>
+</body>
 </html>
